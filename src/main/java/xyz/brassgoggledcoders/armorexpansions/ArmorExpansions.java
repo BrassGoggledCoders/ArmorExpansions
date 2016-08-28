@@ -1,7 +1,6 @@
 package xyz.brassgoggledcoders.armorexpansions;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -10,7 +9,6 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import xyz.brassgoggledcoders.armorexpansions.blocks.BlockExtensionEditor;
 import xyz.brassgoggledcoders.armorexpansions.proxies.CommonProxy;
 import xyz.brassgoggledcoders.boilerplate.BaseCreativeTab;
 import xyz.brassgoggledcoders.boilerplate.BoilerplateModBase;
@@ -30,8 +28,6 @@ public class ArmorExpansions extends BoilerplateModBase {
 	@Instance(ArmorExpansions.ID)
 	public static ArmorExpansions instance;
 
-	public static Block extensionEditor;
-
 	public ArmorExpansions() {
 		super(ArmorExpansions.ID, ArmorExpansions.NAME, ArmorExpansions.VERSION, new AREXTab());
 	}
@@ -40,9 +36,6 @@ public class ArmorExpansions extends BoilerplateModBase {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
-		extensionEditor = new BlockExtensionEditor(Material.IRON, "extension_editor");
-		this.getRegistryHolder().getBlockRegistry().registerBlock(extensionEditor);
-
 		CapabilityHandler.init();
 	}
 
@@ -64,13 +57,19 @@ public class ArmorExpansions extends BoilerplateModBase {
 	}
 
 	public static class AREXTab extends BaseCreativeTab {
+		public static Item extensionEditor;
+
 		public AREXTab() {
 			super(ID);
+			if(extensionEditor == null) {
+				Block editor = ArmorExpansions.instance.getRegistryHolder().getBlockRegistry().getBlock("extension_editor");
+				extensionEditor = Item.getItemFromBlock(editor);
+			}
 		}
 
 		@Override
 		public Item getTabIconItem() {
-			return Item.getItemFromBlock(extensionEditor);
+			return extensionEditor;
 		}
 	}
 }

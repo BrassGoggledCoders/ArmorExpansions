@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.armorexpansions.tileentities;
+package xyz.brassgoggledcoders.armorexpansions.modules.extensioneditor.tileentities;
 
 import xyz.brassgoggledcoders.boilerplate.tileentities.TileEntityBase;
 
