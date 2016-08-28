@@ -16,8 +16,8 @@ import xyz.brassgoggledcoders.boilerplate.BoilerplateModBase;
 @Mod(modid = ArmorExpansions.ID, name = ArmorExpansions.NAME, version = ArmorExpansions.VERSION,
 		dependencies = ArmorExpansions.DEPENDENCIES)
 public class ArmorExpansions extends BoilerplateModBase {
-	public final static String ID = "armourexpansions";
-	public final static String NAME = "ArmourExpansions";
+	public final static String ID = "armorexpansions";
+	public final static String NAME = "ArmorExpansions";
 	public final static String VERSION = "@VERSION@";
 	public final static String DEPENDENCIES = "required-after:boilerplate";
 
