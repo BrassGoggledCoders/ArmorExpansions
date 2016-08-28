@@ -31,7 +31,7 @@ public class ArmorExpansions extends BoilerplateModBase {
 	@Instance(ArmorExpansions.ID)
 	public static ArmorExpansions instance;
 
-	public static Block extensioneditor;
+	public static Block extensionEditor;
 
 	public static CreativeTabs tab = new AREXTab();
 
@@ -43,8 +43,8 @@ public class ArmorExpansions extends BoilerplateModBase {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
-		extensioneditor = new BlockExtensionEditor(Material.IRON, "extension_editor");
-		this.getRegistryHolder().getBlockRegistry().registerBlock(extensioneditor);
+		extensionEditor = new BlockExtensionEditor(Material.IRON, "extension_editor");
+		this.getRegistryHolder().getBlockRegistry().registerBlock(extensionEditor);
 
 		CapabilityHandler.init();
 	}
@@ -73,7 +73,7 @@ public class ArmorExpansions extends BoilerplateModBase {
 
 		@Override
 		public Item getTabIconItem() {
-			return Item.getItemFromBlock(extensioneditor);
+			return Item.getItemFromBlock(extensionEditor);
 		}
 	}
 }
