@@ -1,5 +1,5 @@
 package xyz.brassgoggledcoders.armorexpansions.api;
 
-public class IModuleHandler {
+public class IExtensionHandler {
 
 }

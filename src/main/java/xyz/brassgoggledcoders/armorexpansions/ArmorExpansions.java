@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import xyz.brassgoggledcoders.armorexpansions.blocks.BlockModuleEditor;
+import xyz.brassgoggledcoders.armorexpansions.blocks.BlockExtensionEditor;
 import xyz.brassgoggledcoders.armorexpansions.proxies.CommonProxy;
 import xyz.brassgoggledcoders.boilerplate.BoilerplateModBase;
 
@@ -39,7 +39,7 @@ public class ArmorExpansions extends BoilerplateModBase {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
-		module_editor = new BlockModuleEditor(Material.IRON, "module_editor");
+		module_editor = new BlockExtensionEditor(Material.IRON, "module_editor");
 		this.getRegistryHolder().getBlockRegistry().registerBlock(module_editor);
 
 		CapabilityHandler.init();

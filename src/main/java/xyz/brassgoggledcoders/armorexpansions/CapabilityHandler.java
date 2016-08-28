@@ -2,16 +2,16 @@ package xyz.brassgoggledcoders.armorexpansions;
 
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import xyz.brassgoggledcoders.armorexpansions.api.IModule;
-import xyz.brassgoggledcoders.armorexpansions.api.IModuleHandler;
+import xyz.brassgoggledcoders.armorexpansions.api.IExtension;
+import xyz.brassgoggledcoders.armorexpansions.api.IExtensionHandler;
 
 public class CapabilityHandler {
 
-	@CapabilityInject(IModule.class)
-	public static final Capability<IModule> MODULE_CAPABILITY = null;
+	@CapabilityInject(IExtension.class)
+	public static final Capability<IExtension> EXTENSION_CAPABILITY = null;
 
-	@CapabilityInject(IModuleHandler.class)
-	public static final Capability<IModuleHandler> MODULE_HANDLER_CAPABILITY = null;
+	@CapabilityInject(IExtensionHandler.class)
+	public static final Capability<IExtensionHandler> EXTENSION_HANDLER_CAPABILITY = null;
 
 	public static void init() {
 		// TODO Setup caps
