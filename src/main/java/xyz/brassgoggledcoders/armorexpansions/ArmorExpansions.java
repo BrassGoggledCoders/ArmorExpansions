@@ -2,7 +2,6 @@ package xyz.brassgoggledcoders.armorexpansions;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -33,10 +32,8 @@ public class ArmorExpansions extends BoilerplateModBase {
 
 	public static Block extensionEditor;
 
-	public static CreativeTabs tab = new AREXTab();
-
 	public ArmorExpansions() {
-		super(ArmorExpansions.ID, ArmorExpansions.NAME, ArmorExpansions.VERSION, tab);
+		super(ArmorExpansions.ID, ArmorExpansions.NAME, ArmorExpansions.VERSION, new AREXTab());
 	}
 
 	@Override
