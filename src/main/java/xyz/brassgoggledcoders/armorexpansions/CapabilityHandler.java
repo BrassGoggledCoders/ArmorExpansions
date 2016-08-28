@@ -2,8 +2,8 @@ package xyz.brassgoggledcoders.armorexpansions;
 
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import xyz.brassgoggledcoders.armorexpansions.api.IExtension;
-import xyz.brassgoggledcoders.armorexpansions.api.IExtensionHandler;
+import xyz.brassgoggledcoders.armorexpansions.api.extension.IExtension;
+import xyz.brassgoggledcoders.armorexpansions.api.extensionhandler.IExtensionHandler;
 
 public class CapabilityHandler {
 
