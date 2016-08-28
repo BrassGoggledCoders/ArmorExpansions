@@ -8,7 +8,7 @@ import xyz.brassgoggledcoders.boilerplate.registries.ConfigRegistry;
 public class ExtensionEditorModule extends ModuleBase {
 	@Override
 	public String getName() {
-		return "Armor Editor";
+		return "Extension Editor";
 	}
 
 	@Override
