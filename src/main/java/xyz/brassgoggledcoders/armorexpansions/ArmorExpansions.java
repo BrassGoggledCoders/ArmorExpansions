@@ -61,14 +61,14 @@ public class ArmorExpansions extends BoilerplateModBase {
 
 		public AREXTab() {
 			super(ID);
-			if(extensionEditor == null) {
-				Block editor = ArmorExpansions.instance.getRegistryHolder().getBlockRegistry().getBlock("extension_editor");
-				extensionEditor = Item.getItemFromBlock(editor);
-			}
 		}
 
 		@Override
 		public Item getTabIconItem() {
+			if(extensionEditor == null) {
+				Block editor = ArmorExpansions.instance.getRegistryHolder().getBlockRegistry().getBlock("extension_editor");
+				extensionEditor = Item.getItemFromBlock(editor);
+			}
 			return extensionEditor;
 		}
 	}
