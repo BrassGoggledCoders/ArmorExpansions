@@ -1,5 +1,7 @@
 package xyz.brassgoggledcoders.armorexpansions;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -8,6 +10,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import xyz.brassgoggledcoders.armorexpansions.blocks.BlockModuleEditor;
 import xyz.brassgoggledcoders.armorexpansions.proxies.CommonProxy;
 import xyz.brassgoggledcoders.boilerplate.BoilerplateModBase;
 
@@ -26,7 +29,7 @@ public class ArmorExpansions extends BoilerplateModBase {
 	@Instance(ArmorExpansions.ID)
 	public static ArmorExpansions instance;
 
-	public static CreativeTabs tabOres;
+	public static Block module_editor;
 
 	public ArmorExpansions() {
 		super(ArmorExpansions.ID, ArmorExpansions.NAME, ArmorExpansions.VERSION, CreativeTabs.MISC);
@@ -36,6 +39,10 @@ public class ArmorExpansions extends BoilerplateModBase {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
+		module_editor = new BlockModuleEditor(Material.IRON, "module_editor");
+		this.getRegistryHolder().getBlockRegistry().registerBlock(module_editor);
+
+		CapabilityHandler.init();
 	}
 
 	@Override
