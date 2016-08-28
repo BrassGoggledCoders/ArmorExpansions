@@ -36,7 +36,7 @@ public class ArmorExpansions extends BoilerplateModBase {
 	public static CreativeTabs tab = new AREXTab();
 
 	public ArmorExpansions() {
-		super(ArmorExpansions.ID, ArmorExpansions.NAME, ArmorExpansions.VERSION, CreativeTabs.MISC);
+		super(ArmorExpansions.ID, ArmorExpansions.NAME, ArmorExpansions.VERSION, tab);
 	}
 
 	@Override
