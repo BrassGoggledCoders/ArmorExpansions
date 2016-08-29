@@ -1,28 +1,28 @@
-package xyz.brassgoggledcoders.armorexpansions.modules.extensioneditor.containers;
+package xyz.brassgoggledcoders.armorexpansions.modules.expansioneditor.containers;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import xyz.brassgoggledcoders.armorexpansions.modules.extensioneditor.containers.slots.SlotExtensionContainer;
-import xyz.brassgoggledcoders.armorexpansions.modules.extensioneditor.tileentities.TileEntityExtensionEditor;
+import xyz.brassgoggledcoders.armorexpansions.modules.expansioneditor.containers.slots.SlotExpansionContainer;
+import xyz.brassgoggledcoders.armorexpansions.modules.expansioneditor.tileentities.TileEntityExpansionEditor;
 import xyz.brassgoggledcoders.boilerplate.containers.ContainerBase;
 import xyz.brassgoggledcoders.boilerplate.containers.slots.SlotArmor;
 
 import javax.annotation.Nonnull;
 
-public class ContainerExtensionEditor extends ContainerBase {
-	private TileEntityExtensionEditor extensionEditor;
+public class ContainerExpansionEditor extends ContainerBase {
+	private TileEntityExpansionEditor expansionEditor;
 
-	public ContainerExtensionEditor(EntityPlayer player, TileEntityExtensionEditor extensionEditor) {
-		this.extensionEditor = extensionEditor;
+	public ContainerExpansionEditor(EntityPlayer player, TileEntityExpansionEditor expansionEditor) {
+		this.expansionEditor = expansionEditor;
 		IItemHandler inventory =
-				extensionEditor.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+				expansionEditor.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
 		for(int i = 0; i < 4; ++i) {
 			this.addSlotToContainer(new SlotArmor(player, i, 62, 8 + i * 18));
 		}
 
-		this.addSlotToContainer(new SlotExtensionContainer(inventory, extensionEditor, 0, 89, 26));
+		this.addSlotToContainer(new SlotExpansionContainer(inventory, expansionEditor, 0, 89, 26));
 
 		for(int i = 0; i < 4; i++) {
 			for(int j = 0; j < 3; j++) {

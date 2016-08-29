@@ -1,12 +1,12 @@
-package xyz.brassgoggledcoders.armorexpansions.api.extension;
+package xyz.brassgoggledcoders.armorexpansions.api.expansion;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public interface IExtension {
+public interface IExpansion {
 	ResourceLocation getIdentifier();
 
-	ExtensionType getExtensionType();
+	ExpansionType getExpansionType();
 
 	boolean canApplyTo(ItemStack targetPiece);
 }

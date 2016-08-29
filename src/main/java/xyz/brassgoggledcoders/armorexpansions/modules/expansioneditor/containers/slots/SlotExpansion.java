@@ -1,4 +1,4 @@
-package xyz.brassgoggledcoders.armorexpansions.modules.extensioneditor.containers.slots;
+package xyz.brassgoggledcoders.armorexpansions.modules.expansioneditor.containers.slots;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -7,9 +7,9 @@ import xyz.brassgoggledcoders.armorexpansions.api.AREXApi;
 import xyz.brassgoggledcoders.boilerplate.containers.slots.SlotChanged;
 import xyz.brassgoggledcoders.boilerplate.tileentities.IOnSlotChanged;
 
-public class SlotExtension extends SlotChanged {
+public class SlotExpansion extends SlotChanged {
 
-	public SlotExtension(IItemHandler itemHandler, IOnSlotChanged changeReceiver, int index, int xPos, int yPos) {
+	public SlotExpansion(IItemHandler itemHandler, IOnSlotChanged changeReceiver, int index, int xPos, int yPos) {
 		super(itemHandler, changeReceiver, index, xPos, yPos);
 	}
 
