@@ -58,7 +58,7 @@ public class ArmorExpansions extends BoilerplateModBase {
 	}
 
 	public static class AREXTab extends BaseCreativeTab {
-		public static Item extensionEditor;
+		public static Item expansionEditor;
 
 		public AREXTab() {
 			super(ID);
@@ -66,11 +66,12 @@ public class ArmorExpansions extends BoilerplateModBase {
 
 		@Override
 		public Item getTabIconItem() {
-			if(extensionEditor == null) {
-				Block editor = ArmorExpansions.instance.getRegistryHolder().getBlockRegistry().getBlock("extension_editor");
-				extensionEditor = Item.getItemFromBlock(editor);
+			if(expansionEditor == null) {
+				Block editor =
+						ArmorExpansions.instance.getRegistryHolder().getBlockRegistry().getBlock("expansion_editor");
+				expansionEditor = Item.getItemFromBlock(editor);
 			}
-			return extensionEditor;
+			return expansionEditor;
 		}
 	}
 }
