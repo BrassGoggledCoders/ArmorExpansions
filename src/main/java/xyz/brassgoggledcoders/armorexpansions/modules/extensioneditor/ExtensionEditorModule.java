@@ -18,5 +18,4 @@ public class ExtensionEditorModule extends ModuleBase {
 	public void registerBlocks(ConfigRegistry configRegistry, BlockRegistry blockRegistry) {
 		blockRegistry.registerBlock(new BlockExtensionEditor());
 	}
-
 }

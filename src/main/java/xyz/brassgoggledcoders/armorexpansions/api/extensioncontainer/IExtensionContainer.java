@@ -1,9 +1,9 @@
-package xyz.brassgoggledcoders.armorexpansions.api.extensionhandler;
+package xyz.brassgoggledcoders.armorexpansions.api.extensioncontainer;
 
 import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.armorexpansions.api.extension.IExtension;
 
-public interface IExtensionHandler {
+public interface IExtensionContainer {
 	ResourceLocation getIdentifier();
 
 	boolean canAcceptExtension(IExtension extension);
