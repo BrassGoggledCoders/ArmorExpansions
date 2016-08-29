@@ -18,8 +18,8 @@ public class GuiExpansionEditor extends GuiScreenBase {
 
 	public GuiExpansionEditor(EntityPlayer player, TileEntityExpansionEditor extensionEditor) {
 		super(new ContainerExpansionEditor(player, extensionEditor));
-		int x = (this.width - this.xSize) / 2;
-		int y = (this.height - this.ySize) / 2;
+		// int x = (this.width - this.xSize) / 2;
+		// int y = (this.height - this.ySize) / 2;
 		// TODO
 		// this.addComponent(new RenderEntityLivingBaseComponent(x + 33, y + 75, 30, (float) (x + 33) - x,
 		// (float) (y + 75 - 50) - y, Minecraft.getMinecraft().thePlayer));

@@ -23,25 +23,25 @@ public class AREXApi {
 			@Override
 			public NBTBase writeNBT(Capability<IExpansionContainer> capability, IExpansionContainer instance,
 					EnumFacing side) {
-				return new NBTTagCompound();
+				return instance.serializeNBT();
 			}
 
 			@Override
 			public void readNBT(Capability<IExpansionContainer> capability, IExpansionContainer instance,
 					EnumFacing side, NBTBase nbt) {
-
+				instance.deserializeNBT((NBTTagCompound) nbt);
 			}
 		}, ExpansionContainerHandler::new);
 
 		CapabilityManager.INSTANCE.register(IExpansion.class, new Capability.IStorage<IExpansion>() {
 			@Override
 			public NBTBase writeNBT(Capability<IExpansion> capability, IExpansion instance, EnumFacing side) {
-				return new NBTTagCompound();
+				return instance.serializeNBT();
 			}
 
 			@Override
 			public void readNBT(Capability<IExpansion> capability, IExpansion instance, EnumFacing side, NBTBase nbt) {
-
+				instance.deserializeNBT((NBTTagCompound) nbt);
 			}
 		}, ExpansionHandler::new);
 	}

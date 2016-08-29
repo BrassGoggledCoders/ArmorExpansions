@@ -14,10 +14,7 @@ import xyz.brassgoggledcoders.boilerplate.containers.slots.SlotArmor;
 
 // TODO Shift-click crashes.
 public class ContainerExpansionEditor extends ContainerBase {
-	private TileEntityExpansionEditor expansionEditor;
-
 	public ContainerExpansionEditor(EntityPlayer player, TileEntityExpansionEditor expansionEditor) {
-		this.expansionEditor = expansionEditor;
 		IItemHandler inventory =
 				expansionEditor.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
 		for(int i = 0; i < 4; ++i) {
@@ -29,7 +26,7 @@ public class ContainerExpansionEditor extends ContainerBase {
 		for(int v = 0; v < 4; v++) {
 			for(int h = 0; h < 3; h++) {
 				this.addSlotToContainer(
-						new SlotExpansion(inventory, expansionEditor, h + (v * 3), 116 + h * 18, 8 + (v * 18)));
+						new SlotExpansion(inventory, expansionEditor, h + (v * 3) + 1, 116 + h * 18, 8 + (v * 18)));
 			}
 		}
 
