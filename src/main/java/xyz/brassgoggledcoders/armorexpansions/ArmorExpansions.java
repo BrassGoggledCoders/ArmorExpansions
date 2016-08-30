@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import xyz.brassgoggledcoders.armorexpansions.api.AREXApi;
+import xyz.brassgoggledcoders.armorexpansions.api.AREXAPI;
 import xyz.brassgoggledcoders.armorexpansions.proxies.CommonProxy;
 import xyz.brassgoggledcoders.boilerplate.BaseCreativeTab;
 import xyz.brassgoggledcoders.boilerplate.BoilerplateModBase;
@@ -37,7 +37,7 @@ public class ArmorExpansions extends BoilerplateModBase {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
-		AREXApi.registerCaps();
+		AREXAPI.registerCaps();
 	}
 
 	@Override

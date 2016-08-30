@@ -3,7 +3,7 @@ package xyz.brassgoggledcoders.armorexpansions.modules.expansioneditor.container
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.IItemHandler;
-import xyz.brassgoggledcoders.armorexpansions.api.AREXApi;
+import xyz.brassgoggledcoders.armorexpansions.api.AREXAPI;
 import xyz.brassgoggledcoders.boilerplate.containers.slots.SlotChanged;
 import xyz.brassgoggledcoders.boilerplate.tileentities.IOnSlotChanged;
 
@@ -15,6 +15,6 @@ public class SlotExpansionContainer extends SlotChanged {
 
 	@Override
 	public boolean isItemValid(ItemStack itemStack) {
-		return itemStack != null && itemStack.hasCapability(AREXApi.EXTENSION_CONTAINER_CAP, EnumFacing.UP);
+		return itemStack != null && itemStack.hasCapability(AREXAPI.EXTENSION_CONTAINER_CAP, EnumFacing.UP);
 	}
 }

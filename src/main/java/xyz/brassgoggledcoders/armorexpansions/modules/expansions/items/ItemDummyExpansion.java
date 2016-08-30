@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import xyz.brassgoggledcoders.armorexpansions.ArmorExpansions;
-import xyz.brassgoggledcoders.armorexpansions.api.AREXApi;
+import xyz.brassgoggledcoders.armorexpansions.api.AREXAPI;
 import xyz.brassgoggledcoders.armorexpansions.api.expansion.ExpansionHandler;
 import xyz.brassgoggledcoders.armorexpansions.api.expansion.IExpansion;
 import xyz.brassgoggledcoders.boilerplate.items.ItemBase;
@@ -32,14 +32,14 @@ public class ItemDummyExpansion extends ItemBase {
 
 		@Override
 		public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-			if(capability == AREXApi.EXTENSION_CAP)
+			if(capability == AREXAPI.EXTENSION_CAP)
 				return true;
 			return false;
 		}
 
 		@Override
 		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-			return AREXApi.EXTENSION_CAP.cast(extension);
+			return AREXAPI.EXTENSION_CAP.cast(extension);
 		}
 	}
 

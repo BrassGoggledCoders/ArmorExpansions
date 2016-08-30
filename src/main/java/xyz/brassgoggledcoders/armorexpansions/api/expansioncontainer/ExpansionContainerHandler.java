@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.FMLLog;
 import xyz.brassgoggledcoders.armorexpansions.api.expansion.IExpansion;
 
 public class ExpansionContainerHandler implements IExpansionContainer {
@@ -29,6 +28,7 @@ public class ExpansionContainerHandler implements IExpansionContainer {
 		tag.setInteger("expansionCount", containedExpansions.size());
 		for(int i = 0; i < containedExpansions.size(); i++) {
 			tag.setTag("extension" + i, containedExpansions.get(i).serializeNBT());
+			containedExpansions.remove(i);
 		}
 		// }
 		return tag;
@@ -51,7 +51,7 @@ public class ExpansionContainerHandler implements IExpansionContainer {
 	public boolean addExpansion(ItemStack expansion) {
 		if(!containedExpansions.contains(expansion)) {
 			containedExpansions.add(expansion);
-			FMLLog.warning(getContainedExpansions().toString());
+			this.serializeNBT();
 			return true;
 		}
 		else

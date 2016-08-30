@@ -1,5 +1,8 @@
 package xyz.brassgoggledcoders.armorexpansions.modules.armor.items;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -9,7 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.common.FMLLog;
-import xyz.brassgoggledcoders.armorexpansions.api.AREXApi;
+import xyz.brassgoggledcoders.armorexpansions.api.AREXAPI;
 import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.ExpansionContainerHandler;
 import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.IExpansionContainer;
 import xyz.brassgoggledcoders.boilerplate.items.ItemArmorBase;
@@ -24,12 +27,28 @@ public class ItemExpandableArmor extends ItemArmorBase {
 	}
 
 	@Override
+	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
+		if(stack != null) {
+			list.add("Expansions:");
+
+			ArrayList<ItemStack> expansions =
+					stack.getCapability(AREXAPI.EXTENSION_CONTAINER_CAP, null).getContainedExpansions();
+
+			for(ItemStack expansion : expansions) {
+				list.add(expansion.getDisplayName());
+			}
+		}
+	}
+
+	@Override
 	public void onArmorTick(World world, EntityPlayer player, ItemStack is) {
-		FMLLog.warning(is.getCapability(AREXApi.EXTENSION_CONTAINER_CAP, null).getContainedExpansions().toString());
+		FMLLog.warning(is.getCapability(AREXAPI.EXTENSION_CONTAINER_CAP, null).getContainedExpansions().toString());
 	}
 
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
+		if(stack.getTagCompound() == null)
+			stack.setTagCompound(new NBTTagCompound());
 		return new CapabilityProvider(slot);
 	}
 
@@ -64,15 +83,14 @@ public class ItemExpandableArmor extends ItemArmorBase {
 
 		@Override
 		public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-			if(capability == AREXApi.EXTENSION_CONTAINER_CAP)
+			if(capability == AREXAPI.EXTENSION_CONTAINER_CAP)
 				return true;
 			return false;
 		}
 
 		@Override
 		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-			return AREXApi.EXTENSION_CONTAINER_CAP.cast(container);
+			return AREXAPI.EXTENSION_CONTAINER_CAP.cast(container);
 		}
 	}
-
 }

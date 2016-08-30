@@ -11,7 +11,7 @@ import xyz.brassgoggledcoders.armorexpansions.api.expansion.IExpansion;
 import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.ExpansionContainerHandler;
 import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.IExpansionContainer;
 
-public class AREXApi {
+public class AREXAPI {
 	@CapabilityInject(IExpansion.class)
 	public static Capability<IExpansion> EXTENSION_CAP;
 

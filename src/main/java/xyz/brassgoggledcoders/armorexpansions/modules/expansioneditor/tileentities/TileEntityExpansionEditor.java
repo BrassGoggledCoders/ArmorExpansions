@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLLog;
-import xyz.brassgoggledcoders.armorexpansions.api.AREXApi;
+import xyz.brassgoggledcoders.armorexpansions.api.AREXAPI;
 import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.ExpansionContainerHandler;
 import xyz.brassgoggledcoders.armorexpansions.modules.expansioneditor.containers.ContainerExpansionEditor;
 import xyz.brassgoggledcoders.armorexpansions.modules.expansioneditor.guis.GuiExpansionEditor;
@@ -34,9 +34,9 @@ public class TileEntityExpansionEditor extends TileEntityInventoryBase implement
 
 	@Override
 	public void onSlotChanged(Slot slot) {
-		if(slot.getHasStack() && slot.getStack().hasCapability(AREXApi.EXTENSION_CONTAINER_CAP, null)) {
+		if(slot.getHasStack() && slot.getStack().hasCapability(AREXAPI.EXTENSION_CONTAINER_CAP, null)) {
 			ExpansionContainerHandler handler =
-					(ExpansionContainerHandler) slot.getStack().getCapability(AREXApi.EXTENSION_CONTAINER_CAP, null);
+					(ExpansionContainerHandler) slot.getStack().getCapability(AREXAPI.EXTENSION_CONTAINER_CAP, null);
 			FMLLog.warning(handler.getContainedExpansions().toString());
 			handler.addExpansion(new ItemStack(ExpansionsModule.dummy));
 		}
