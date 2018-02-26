@@ -13,14 +13,14 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 
 repositories {
     maven {
-        name "BrassGoggledCoders maven"
-        url "https://maven.brassgoggledcoders.xyz"
+        name "TAC maven"
+        url "http://maven.blamejared.com"
     }
 }
 
@@ -28,11 +28,11 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 version = "${minecraft_version}-${mod_version}." + System.getenv("bamboo_buildNumber")
 
-group= "xyz.brassgoggledcoders.modularutilities"
+group= "xyz.brassgoggledcoders.armorexpansions"
 archivesBaseName = "${mod_name}"
 
 minecraft {
-    version = "${minecraft_version}-${forge_version}"
+    version = "${forge_version}"
 
     mappings = "${mappings_version}"
     runDir = "run/"
@@ -43,13 +43,11 @@ minecraft {
 }
 
 dependencies {
-    compile "xyz.brassgoggledcoders.boilerplate:Boilerplate:${minecraft_version}-${boilerplate_version}:deobf"
+    deobfCompile "com.teamacronymcoders.base:base:${base_version}-SNAPSHOT.+"
 }
 
-compileJava {
-    sourceCompatibility = 1.7
-    targetCompatibility = 1.7
-}
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 processResources
 {
