@@ -1,5 +1,7 @@
 package xyz.brassgoggledcoders.armorexpansions.modules.armor.items;
 
+import com.teamacronymcoders.base.items.ItemArmorBase;
+
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -9,12 +11,11 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import xyz.brassgoggledcoders.armorexpansions.api.AREXApi;
 import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.ExpansionContainerHandler;
 import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.IExpansionContainer;
-import xyz.brassgoggledcoders.boilerplate.items.ItemArmorBase;
 
 public class ItemExpandableArmor extends ItemArmorBase {
 
 	public ItemExpandableArmor(ArmorMaterial mat, EntityEquipmentSlot slot, String name) {
-		super(mat, slot, name, "expandable");
+		super(mat, slot);
 	}
 
 	@Override

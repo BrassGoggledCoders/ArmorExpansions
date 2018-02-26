@@ -1,26 +1,26 @@
 package xyz.brassgoggledcoders.armorexpansions;
 
-import net.minecraft.block.Block;
+import com.teamacronymcoders.base.BaseModFoundation;
+
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.*;
 import xyz.brassgoggledcoders.armorexpansions.api.AREXApi;
 import xyz.brassgoggledcoders.armorexpansions.proxies.CommonProxy;
-import xyz.brassgoggledcoders.boilerplate.BaseCreativeTab;
-import xyz.brassgoggledcoders.boilerplate.BoilerplateModBase;
 
 @Mod(modid = ArmorExpansions.ID, name = ArmorExpansions.NAME, version = ArmorExpansions.VERSION,
 		dependencies = ArmorExpansions.DEPENDENCIES)
-public class ArmorExpansions extends BoilerplateModBase {
+public class ArmorExpansions extends BaseModFoundation<ArmorExpansions> {
 	public final static String ID = "armorexpansions";
 	public final static String NAME = "ArmorExpansions";
 	public final static String VERSION = "@VERSION@";
-	public final static String DEPENDENCIES = "required-after:boilerplate";
+	public final static String DEPENDENCIES = "required-after:base";
 
 	@SidedProxy(clientSide = "xyz.brassgoggledcoders.armorexpansions.proxies.ClientProxy",
 			serverSide = "xyz.brassgoggledcoders.armorexpansions.proxies.ServerProxy")
@@ -30,7 +30,7 @@ public class ArmorExpansions extends BoilerplateModBase {
 	public static ArmorExpansions instance;
 
 	public ArmorExpansions() {
-		super(ArmorExpansions.ID, ArmorExpansions.NAME, ArmorExpansions.VERSION, new AREXTab());
+		super(ID, NAME, VERSION, new AREXTab());
 	}
 
 	@Override
@@ -53,11 +53,11 @@ public class ArmorExpansions extends BoilerplateModBase {
 	}
 
 	@Override
-	public Object getInstance() {
+	public ArmorExpansions getInstance() {
 		return instance;
 	}
 
-	public static class AREXTab extends BaseCreativeTab {
+	public static class AREXTab extends CreativeTabs {
 		public static Item expansionEditor;
 
 		public AREXTab() {
@@ -65,13 +65,8 @@ public class ArmorExpansions extends BoilerplateModBase {
 		}
 
 		@Override
-		public Item getTabIconItem() {
-			if(expansionEditor == null) {
-				Block editor =
-						ArmorExpansions.instance.getRegistryHolder().getBlockRegistry().getBlock("expansion_editor");
-				expansionEditor = Item.getItemFromBlock(editor);
-			}
-			return expansionEditor;
+		public ItemStack getTabIconItem() {
+			return new ItemStack(Items.DIAMOND);
 		}
 	}
 }

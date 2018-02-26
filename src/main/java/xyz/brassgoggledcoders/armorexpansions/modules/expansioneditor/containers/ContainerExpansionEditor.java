@@ -2,15 +2,17 @@ package xyz.brassgoggledcoders.armorexpansions.modules.expansioneditor.container
 
 import javax.annotation.Nonnull;
 
+import com.teamacronymcoders.base.containers.ContainerBase;
+import com.teamacronymcoders.base.containers.slots.SlotArmor;
+
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import xyz.brassgoggledcoders.armorexpansions.modules.expansioneditor.containers.slots.SlotExpansion;
 import xyz.brassgoggledcoders.armorexpansions.modules.expansioneditor.containers.slots.SlotExpansionContainer;
 import xyz.brassgoggledcoders.armorexpansions.modules.expansioneditor.tileentities.TileEntityExpansionEditor;
-import xyz.brassgoggledcoders.boilerplate.containers.ContainerBase;
-import xyz.brassgoggledcoders.boilerplate.containers.slots.SlotArmor;
 
 // TODO Shift-click crashes.
 public class ContainerExpansionEditor extends ContainerBase {
@@ -21,7 +23,7 @@ public class ContainerExpansionEditor extends ContainerBase {
 		IItemHandler inventory =
 				expansionEditor.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
 		for(int i = 0; i < 4; ++i) {
-			this.addSlotToContainer(new SlotArmor(player, i, 62, 8 + i * 18));
+			this.addSlotToContainer(new SlotArmor(player, EntityEquipmentSlot.values()[i], 62, 8 + i * 18));
 		}
 
 		this.addSlotToContainer(new SlotExpansionContainer(inventory, expansionEditor, 0, 89, 26));
