@@ -24,19 +24,15 @@ public class ArmorModule extends ModuleBase {
 	@Override
 	public void registerItems(ConfigRegistry configRegistry, ItemRegistry itemRegistry) {
 		// TODO custom unbreakable armor material?
-		expandableHelmet = new ItemExpandableArmor(ArmorMaterial.IRON, EntityEquipmentSlot.HEAD, "expandable_helmet")
-				.setUnlocalizedName("expandable_helmet");
+		expandableHelmet = new ItemExpandableArmor(ArmorMaterial.IRON, EntityEquipmentSlot.HEAD, "expandable_helmet");
 		itemRegistry.register(expandableHelmet);
 		expandableChestplate =
-				new ItemExpandableArmor(ArmorMaterial.IRON, EntityEquipmentSlot.CHEST, "expandable_chestplate")
-						.setUnlocalizedName("expandable_chestplate");
+				new ItemExpandableArmor(ArmorMaterial.IRON, EntityEquipmentSlot.CHEST, "expandable_chestplate");
 		itemRegistry.register(expandableChestplate);
 		expandableLeggings =
-				new ItemExpandableArmor(ArmorMaterial.IRON, EntityEquipmentSlot.LEGS, "expandable_leggings")
-						.setUnlocalizedName("expandable_leggings");
+				new ItemExpandableArmor(ArmorMaterial.IRON, EntityEquipmentSlot.LEGS, "expandable_leggings");
 		itemRegistry.register(expandableLeggings);
-		expandableBoots = new ItemExpandableArmor(ArmorMaterial.IRON, EntityEquipmentSlot.FEET, "expandable_boots")
-				.setUnlocalizedName("expandable_boots");
+		expandableBoots = new ItemExpandableArmor(ArmorMaterial.IRON, EntityEquipmentSlot.FEET, "expandable_boots");
 		itemRegistry.register(expandableBoots);
 	}
 }

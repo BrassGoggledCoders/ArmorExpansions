@@ -8,14 +8,19 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.EnumHelper;
+import xyz.brassgoggledcoders.armorexpansions.ArmorExpansions;
 import xyz.brassgoggledcoders.armorexpansions.api.AREXApi;
 import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.ExpansionContainerHandler;
 import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.IExpansionContainer;
 
 public class ItemExpandableArmor extends ItemArmorBase {
 
+	static ArmorMaterial expandable = EnumHelper.addArmorMaterial("expandable", ArmorExpansions.ID + ":warlord", -1,
+			new int[] {0, 0, 0, 0}, 0, null, -1);
+
 	public ItemExpandableArmor(ArmorMaterial mat, EntityEquipmentSlot slot, String name) {
-		super(mat, slot);
+		super(expandable, slot, name);
 	}
 
 	@Override
