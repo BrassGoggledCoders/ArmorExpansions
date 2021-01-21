@@ -13,4 +13,9 @@ public class ExpansionContainerHandler implements IExpansionContainer {
     public boolean canAcceptExpansion(IExpansion extension) {
         return true;
     }
+
+    @Override
+    public int getMaximumNumberOfExpansions() {
+        return 0;
+    }
 }

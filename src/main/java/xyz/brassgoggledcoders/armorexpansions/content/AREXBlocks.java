@@ -6,12 +6,14 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.armorexpansions.ArmorExpansions;
 import xyz.brassgoggledcoders.armorexpansions.blocks.ExpansionEditorBlock;
 import xyz.brassgoggledcoders.armorexpansions.tileentities.ExpansionEditorTileEntity;
 
+import java.util.Collection;
 import java.util.function.Function;
 
 public class AREXBlocks {
@@ -32,5 +34,9 @@ public class AREXBlocks {
 
     private static <B extends Block> Function<B, BlockItem> blockItemCreator() {
         return block -> new BlockItem(block, new Item.Properties().group(ArmorExpansions.ITEM_GROUP));
+    }
+
+    public static Collection<RegistryObject<Block>> getAllBlocks() {
+        return BLOCKS.getEntries();
     }
 }

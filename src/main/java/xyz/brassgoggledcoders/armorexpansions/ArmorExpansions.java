@@ -10,6 +10,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import xyz.brassgoggledcoders.armorexpansions.api.AREXAPI;
+import xyz.brassgoggledcoders.armorexpansions.content.AREXBlocks;
 import xyz.brassgoggledcoders.armorexpansions.content.AREXItems;
 
 
@@ -25,8 +26,9 @@ public class ArmorExpansions {
     public ArmorExpansions() {
         super();
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+        AREXBlocks.register(modBus);
         AREXItems.register(modBus);
-        AREXAPI.registerCaps();
+        //AREXAPI.registerCaps(); TODO
     }
 
 

@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[${loader_version},)"
+issueTrackerURL="https://github.com/BrassGoggledCoders/Workshop/issues"
+license="MIT"
+
+[[mods]]
+    modId="armorexpansions"
+    version="${mod_version}"
+    displayName="Armor Expansions"
+    credits=""
+    authors="Brass Goggled Coders"
+    description=""
+
+[[dependencies.armorexpansions]]
+    modId="forge"
+    mandatory=true
+    versionRange="[${forge_version},)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.armorexpansions]]
+    modId="titanium"
+    mandatory=true
+    versionRange="[${titanium_version},)"
+    ordering="NONE"
+    side="BOTH"

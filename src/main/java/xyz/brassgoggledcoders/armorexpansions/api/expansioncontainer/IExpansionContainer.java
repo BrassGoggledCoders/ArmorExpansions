@@ -7,4 +7,6 @@ public interface IExpansionContainer {
     ResourceLocation getIdentifier();
 
     boolean canAcceptExpansion(IExpansion extension);
+
+    int getMaximumNumberOfExpansions();
 }

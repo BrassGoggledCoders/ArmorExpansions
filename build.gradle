@@ -102,12 +102,12 @@ minecraft {
             properties 'mixin.env.disableRefMap': 'true'
 
             args '--all', '--output', file('src/datagen/generated/'),
-                    '--mod', 'workshop', '--reports',
+                    '--mod', 'armorexpansions', '--reports',
                     '--existing', sourceSets.main.resources.srcDirs[0]
 
             //datagenSourceSet.compileClasspath += project.sourceSets.main.output
             mods {
-                workshop.sources((SourceSet[]) [sourceSets.main, sourceSets.datagenmain])
+                armorexpansions.sources((SourceSet[]) [sourceSets.main, sourceSets.datagenmain])
             }
         }
     }
