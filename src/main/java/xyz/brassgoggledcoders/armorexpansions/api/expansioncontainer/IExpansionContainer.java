@@ -4,7 +4,7 @@ import net.minecraft.util.ResourceLocation;
 import xyz.brassgoggledcoders.armorexpansions.api.expansion.IExpansion;
 
 public interface IExpansionContainer {
-	ResourceLocation getIdentifier();
+    ResourceLocation getIdentifier();
 
-	boolean canAcceptExpansion(IExpansion extension);
+    boolean canAcceptExpansion(IExpansion extension);
 }

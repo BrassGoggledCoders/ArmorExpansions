@@ -4,9 +4,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public interface IExpansion {
-	ResourceLocation getIdentifier();
+    ResourceLocation getIdentifier();
 
-	ExpansionType getExpansionType();
+    ExpansionType getExpansionType();
 
-	boolean canApplyTo(ItemStack targetPiece);
+    boolean canApplyTo(ItemStack targetPiece);
 }
