@@ -8,15 +8,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.IForgeRegistryEntry;
+import net.minecraftforge.registries.RegistryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import xyz.brassgoggledcoders.armorexpansions.api.expansion.IExpansion;
+import xyz.brassgoggledcoders.armorexpansions.api.expansion.Expansion;
 import xyz.brassgoggledcoders.armorexpansions.content.AREXBlocks;
+import xyz.brassgoggledcoders.armorexpansions.content.AREXExpansions;
 import xyz.brassgoggledcoders.armorexpansions.content.AREXItems;
-import xyz.brassgoggledcoders.armorexpansions.expansions.TestExpansion;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Mod(ArmorExpansions.MOD_ID)
 @Mod.EventBusSubscriber(modid = ArmorExpansions.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -28,16 +27,30 @@ public class ArmorExpansions {
     public static final ItemGroup ITEM_GROUP = new TitaniumTab(MOD_ID,
             () -> new ItemStack(Items.BEDROCK));
 
-    //TODO Investigate converting this to a Forge Registry. Is there any benefit?
-    public static final Map<ResourceLocation, IExpansion> EXPANSIONS = new HashMap<>();
+    private static boolean registriesSetup = false;
 
     public ArmorExpansions() {
         super();
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        setupRegistries();
+
+        AREXExpansions.register(modBus);
         AREXBlocks.register(modBus);
         AREXItems.register(modBus);
-        //TODO
-        TestExpansion e = new TestExpansion();
-        EXPANSIONS.put(e.getIdentifier(), e);
+    }
+
+    public static void setupRegistries() {
+        if (!registriesSetup) {
+            makeRegistry("expansion", Expansion.class);
+            registriesSetup = true;
+        }
+    }
+
+    private static <T extends IForgeRegistryEntry<T>> void makeRegistry(String name, Class<T> type) {
+        new RegistryBuilder<T>()
+                .setName(new ResourceLocation(ArmorExpansions.MOD_ID, name))
+                .setType(type)
+                .create();
     }
 }

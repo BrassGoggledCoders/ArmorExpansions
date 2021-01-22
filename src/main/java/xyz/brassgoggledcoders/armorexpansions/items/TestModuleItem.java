@@ -8,13 +8,14 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import xyz.brassgoggledcoders.armorexpansions.api.AREXAPI;
-import xyz.brassgoggledcoders.armorexpansions.expansions.TestExpansion;
+import xyz.brassgoggledcoders.armorexpansions.api.expansionholder.ItemStackExpansionProvider;
+import xyz.brassgoggledcoders.armorexpansions.content.AREXExpansions;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class ItemTestModule extends Item {
-    public ItemTestModule(Properties properties) {
+public class TestModuleItem extends Item {
+    public TestModuleItem(Properties properties) {
         super(properties);
     }
 
@@ -24,8 +25,7 @@ public class ItemTestModule extends Item {
             @Nonnull
             @Override
             public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-                //TODO
-                return AREXAPI.EXTENSION_CAP.orEmpty(cap, LazyOptional.of(TestExpansion::new));
+                return AREXAPI.EXPANSION_HOLDER_CAP.orEmpty(cap, LazyOptional.of(() -> new ItemStackExpansionProvider(stack, AREXExpansions.TEST)));
             }
         };
     }

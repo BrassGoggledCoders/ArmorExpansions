@@ -2,17 +2,17 @@ package xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.util.ResourceLocation;
-import xyz.brassgoggledcoders.armorexpansions.api.expansion.IExpansion;
+import xyz.brassgoggledcoders.armorexpansions.api.expansionholder.IExpansionHolder;
 
 public interface IExpansionContainer {
     ResourceLocation getIdentifier();
 
-    boolean canAcceptExpansion(IExpansion extension);
+    boolean canAcceptExpansion(IExpansionHolder extension);
 
     int getMaximumNumberOfExpansions();
 
     //Immutable to force use of add method so it properly goes to NBT...
-    ImmutableList<IExpansion> getExpansions();
+    ImmutableList<IExpansionHolder> getExpansions();
 
-    void addExpansion(IExpansion expansion);
+    void addExpansion(IExpansionHolder expansion);
 }

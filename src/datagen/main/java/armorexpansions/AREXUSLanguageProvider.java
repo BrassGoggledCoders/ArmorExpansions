@@ -14,5 +14,10 @@ public class AREXUSLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         this.addBlock(AREXBlocks.EXPANSION_EDITOR, "Expansion Editor");
+        this.addExpansion("test", "Test Expansion!");
+    }
+
+    public void addExpansion(String key, String name) {
+        this.add("expansion.armorexpansions." + key, name);
     }
 }

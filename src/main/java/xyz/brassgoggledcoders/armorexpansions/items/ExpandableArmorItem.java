@@ -1,6 +1,7 @@
 package xyz.brassgoggledcoders.armorexpansions.items;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.IArmorMaterial;
@@ -14,26 +15,32 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import xyz.brassgoggledcoders.armorexpansions.api.AREXAPI;
-import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.ExpansionContainerCapabilityProvider;
+import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.ItemStackExpansionContainerProvider;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemExpandableArmor extends ArmorItem {
+public class ExpandableArmorItem extends ArmorItem {
 
-    public ItemExpandableArmor(IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties builderIn) {
+    public ExpandableArmorItem(IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties builderIn) {
         super(materialIn, slot, builderIn.maxStackSize(1));
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        stack.getCapability(AREXAPI.EXTENSION_CONTAINER_CAP).ifPresent(cap -> cap.getExpansions().forEach(expansion ->
-                tooltip.add(new StringTextComponent(expansion.getIdentifier().getPath()))));
+        stack.getCapability(AREXAPI.EXPANSION_CONTAINER_CAP).ifPresent(cap -> cap.getExpansions().forEach(expansion ->
+                tooltip.add(expansion.getExpansion().getDisplayName())));
     }
 
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt) {
-        return new ExpansionContainerCapabilityProvider(stack);
+        return new ItemStackExpansionContainerProvider(stack, 10);
+    }
+
+    @Override
+    public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+        stack.getCapability(AREXAPI.EXPANSION_CONTAINER_CAP).ifPresent(cap -> cap.getExpansions().forEach(expansion ->
+                expansion.getExpansion().tick(stack, worldIn, entityIn)));
     }
 }

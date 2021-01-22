@@ -15,7 +15,7 @@ public class ExpansionEditorTileEntity extends BasicInventoryTileEntity<Expansio
     public ExpansionEditorTileEntity() {
         super(AREXBlocks.EXPANSION_EDITOR.getTileEntityType());
         this.getMachineComponent().addInventory(containerInventory = new InventoryComponent<>("container", 0, 0, 1));
-        this.containerInventory.setInputFilter((stack, slot) -> stack.getCapability(AREXAPI.EXTENSION_CONTAINER_CAP).isPresent());
+        this.containerInventory.setInputFilter((stack, slot) -> stack.getCapability(AREXAPI.EXPANSION_CONTAINER_CAP).isPresent());
         this.getMachineComponent().addInventory(expansionsInventory = new InventoryComponent<>("expansions", 10, 20, 20));
         //this.expansionsInventory.setInputFilter((stack, slot) -> !this.containerInventory.getStackInSlot(0).isEmpty()
          //       && stack.getCapability(AREXAPI.EXTENSION_CAP).isPresent());
@@ -29,11 +29,11 @@ public class ExpansionEditorTileEntity extends BasicInventoryTileEntity<Expansio
 
     @Override
     public void tick() {
-        LazyOptional<IExpansionContainer> containerCapability = this.containerInventory.getStackInSlot(0).getCapability(AREXAPI.EXTENSION_CONTAINER_CAP);
+        LazyOptional<IExpansionContainer> containerCapability = this.containerInventory.getStackInSlot(0).getCapability(AREXAPI.EXPANSION_CONTAINER_CAP);
         ItemStack stack = this.expansionsInventory.getStackInSlot(0);
         if(!stack.isEmpty()) {
-            stack.getCapability(AREXAPI.EXTENSION_CAP).ifPresent(cap -> containerCapability.ifPresent(container -> {
-                if(container.canAcceptExpansion(cap) && cap.canApplyTo(stack)) {
+            stack.getCapability(AREXAPI.EXPANSION_HOLDER_CAP).ifPresent(cap -> containerCapability.ifPresent(container -> {
+                if(container.canAcceptExpansion(cap)) {
                     container.addExpansion(cap);
                     this.expansionsInventory.setStackInSlot(0, ItemStack.EMPTY);
                 }

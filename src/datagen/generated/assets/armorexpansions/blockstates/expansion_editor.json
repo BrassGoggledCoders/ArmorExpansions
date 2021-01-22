@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "workshop:block/expansion_editor"
+      "model": "armorexpansions:block/expansion_editor"
     }
   }
 }
