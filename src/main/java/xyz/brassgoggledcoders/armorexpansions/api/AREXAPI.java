@@ -12,6 +12,7 @@ import net.minecraftforge.registries.RegistryManager;
 import xyz.brassgoggledcoders.armorexpansions.api.expansion.DamageReducingExpansion;
 import xyz.brassgoggledcoders.armorexpansions.api.expansion.ExpansionType;
 import xyz.brassgoggledcoders.armorexpansions.api.expansion.TickingExpansion;
+import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.ExpansionContainer;
 import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.IExpansionContainer;
 import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.ItemStackExpansionContainerProvider;
 import xyz.brassgoggledcoders.armorexpansions.api.expansionholder.IExpansionHolder;
@@ -28,7 +29,7 @@ An ExpansionHolder is to an Expansion roughly what an ItemStack is to an Item. E
 @Mod.EventBusSubscriber(modid = Workshop.MOD_ID)
 public class AREXAPI {
     @CapabilityInject(IExpansionHolder.class)
-    public static Capability<IExpansionHolder<?>> EXPANSION_HOLDER_CAP;
+    public static Capability<IExpansionHolder> EXPANSION_HOLDER_CAP;
     @CapabilityInject(IExpansionContainer.class)
     public static Capability<IExpansionContainer> EXPANSION_CONTAINER_CAP;
 
@@ -37,8 +38,8 @@ public class AREXAPI {
     public static Lazy<IForgeRegistry<DamageReducingExpansion>> DAMAGE_REDUCING_EXPANSION = Lazy.of(() -> RegistryManager.ACTIVE.getRegistry(DamageReducingExpansion.class));
 
     static {
-        CapabilityManager.INSTANCE.register(IExpansionContainer.class, new NOPStorage<>(), () -> new ItemStackExpansionContainerProvider(ItemStack.EMPTY, 0));
-        CapabilityManager.INSTANCE.register(IExpansionHolder.class, new NOPStorage<>(), () -> new ItemStackExpansionProvider(ItemStack.EMPTY, AREXExpansions.TEST.get().createInstance()));
+        CapabilityManager.INSTANCE.register(IExpansionContainer.class, new NOPStorage<>(), () -> new ExpansionContainer(ItemStack.EMPTY, 0));
+        CapabilityManager.INSTANCE.register(IExpansionHolder.class, new NOPStorage<>(), () -> new ItemStackExpansionProvider(ItemStack.EMPTY, AREXExpansions.TEST.get()));
     }
 
     public static ExpansionType getExpansionType(String name) {

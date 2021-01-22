@@ -31,10 +31,10 @@ public class ExpansionEditorTileEntity extends BasicInventoryTileEntity<Expansio
         ItemStack stack = this.expansionsInventory.getStackInSlot(0);
         if(!stack.isEmpty()) {
             stack.getCapability(AREXAPI.EXPANSION_HOLDER_CAP).ifPresent(cap -> containerCapability.ifPresent(container -> {
-                if(container.getAllExpansions().size() < container.getMaximumNumberOfExpansions() && container.canAcceptExpansion(cap) && cap.getExpansion().getValidSlots().contains(this.containerInventory.getStackInSlot(0).getEquipmentSlot())) {
+                //if(container.getAllExpansions().size() < container.getMaximumNumberOfExpansions() && container.canAcceptExpansion(cap) && cap.getExpansion().getValidSlots().contains(this.containerInventory.getStackInSlot(0).getEquipmentSlot())) {
                     container.addExpansion(cap);
                     this.expansionsInventory.setStackInSlot(0, ItemStack.EMPTY);
-                }
+                //}
             }));
         }
     }

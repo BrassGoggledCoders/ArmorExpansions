@@ -14,16 +14,21 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import xyz.brassgoggledcoders.armorexpansions.api.AREXAPI;
+import xyz.brassgoggledcoders.armorexpansions.api.expansion.Expansion;
 import xyz.brassgoggledcoders.armorexpansions.api.expansionholder.ItemStackExpansionProvider;
-import xyz.brassgoggledcoders.armorexpansions.content.AREXExpansions;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Supplier;
 
-public class TestModuleItem extends Item {
-    public TestModuleItem(Properties properties) {
+public class BaseExpansionItem extends Item {
+
+    final Supplier<Expansion<?>> expansionSupplier;
+
+    public BaseExpansionItem(Properties properties, Supplier<Expansion<?>> expansionSupplier) {
         super(properties);
+        this.expansionSupplier = expansionSupplier;
     }
 
     @Override
@@ -31,7 +36,7 @@ public class TestModuleItem extends Item {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         tooltip.add(new StringTextComponent("Valid Slots:"));
         stack.getCapability(AREXAPI.EXPANSION_HOLDER_CAP).ifPresent(cap ->
-                cap.getExpansion().getModule().getValidSlots().forEach(type -> tooltip.add(new StringTextComponent(type.toString()))));
+                cap.getExpansion().getValidSlots().forEach(type -> tooltip.add(new StringTextComponent(type.toString()))));
     }
 
     @Override
@@ -40,7 +45,7 @@ public class TestModuleItem extends Item {
             @Nonnull
             @Override
             public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-                return AREXAPI.EXPANSION_HOLDER_CAP.orEmpty(cap, LazyOptional.of(() -> new ItemStackExpansionProvider(stack, AREXExpansions.TEST.get().createInstance())));
+                return AREXAPI.EXPANSION_HOLDER_CAP.orEmpty(cap, LazyOptional.of(() -> new ItemStackExpansionProvider(stack, expansionSupplier.get())));
             }
         };
     }

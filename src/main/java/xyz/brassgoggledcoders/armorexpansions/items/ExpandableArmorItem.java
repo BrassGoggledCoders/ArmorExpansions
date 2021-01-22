@@ -1,7 +1,13 @@
 package xyz.brassgoggledcoders.armorexpansions.items;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.IArmorMaterial;
@@ -15,13 +21,20 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import xyz.brassgoggledcoders.armorexpansions.api.AREXAPI;
+import xyz.brassgoggledcoders.armorexpansions.api.expansion.DamageReducingExpansion;
+import xyz.brassgoggledcoders.armorexpansions.api.expansion.ExpansionType;
 import xyz.brassgoggledcoders.armorexpansions.api.expansion.TickingExpansion;
+import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.ExpansionContainer;
 import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.ItemStackExpansionContainerProvider;
+import xyz.brassgoggledcoders.armorexpansions.content.AREXExpansions;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.UUID;
 
 public class ExpandableArmorItem extends ArmorItem {
+
+    private static final UUID[] ARMOR_MODIFIERS = new UUID[]{UUID.fromString("845DB27C-C624-495F-8C9F-6020A9A58B6B"), UUID.fromString("D8499B04-0E66-4726-AB29-64469D734E0D"), UUID.fromString("9F3D476D-C118-4544-8365-64846904B48E"), UUID.fromString("2AD3F246-FEE1-4E67-B886-69FD380BB150")};
 
     public ExpandableArmorItem(IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties builderIn) {
         super(materialIn, slot, builderIn.maxStackSize(1));
@@ -31,8 +44,11 @@ public class ExpandableArmorItem extends ArmorItem {
     @OnlyIn(Dist.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         stack.getCapability(AREXAPI.EXPANSION_CONTAINER_CAP).ifPresent(cap -> {
-            tooltip.add(new StringTextComponent("Maximum Number of Expansions: " + cap.getMaximumNumberOfExpansions()));
-            cap.getAllExpansions().forEach(expansion -> tooltip.add(expansion.getExpansion().getDisplayName()));
+            if(cap instanceof ExpansionContainer) {
+                ((ExpansionContainer) cap).load();
+                tooltip.add(new StringTextComponent("Maximum Number of Expansions: " + cap.getMaximumNumberOfExpansions()));
+                cap.getAllExpansions().forEach(expansion -> tooltip.add(expansion.getDisplayName()));
+            }
         });
     }
 
@@ -42,16 +58,31 @@ public class ExpandableArmorItem extends ArmorItem {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-        //TODO Cache these filtered lists
+    public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
         stack.getCapability(AREXAPI.EXPANSION_CONTAINER_CAP).ifPresent(cap -> {
-            if(cap.isActive()) {
-                cap.getAllExpansions()
-                        .stream()
-                        .filter(holder -> holder.getExpansion() instanceof TickingExpansion)
-                        .map(holder -> (TickingExpansion)holder.getExpansion())
-                        .forEach(expansion -> expansion.getTick().accept(stack, worldIn, entityIn));
+            if (cap instanceof ExpansionContainer && cap.isActive()) {
+                ((ExpansionContainer) cap).load();
+                cap.getExpansionsOfType(AREXExpansions.TICKING.get(), TickingExpansion.class).forEach(expansion -> expansion.getTick().accept(stack, world, player));
             }
         });
     }
+
+    /*@Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
+        UUID uuid = ARMOR_MODIFIERS[slot.getIndex()];
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        //builder.put(Attributes.ARMOR, new AttributeModifier(uuid, "Armor modifier", (double)this.damageReduceAmount, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(uuid, "Armor toughness", this.getToughness(), AttributeModifier.Operation.ADDITION));
+        if (this.knockbackResistance > 0) {
+            builder.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(uuid, "Armor knockback resistance", (double)this.knockbackResistance, AttributeModifier.Operation.ADDITION));
+        }
+        stack.getCapability(AREXAPI.EXPANSION_CONTAINER_CAP).ifPresent(cap -> {
+            if (cap.isActive()) {
+                builder.put(Attributes.ARMOR, new AttributeModifier(uuid, "Armor modifier", this.getDamageReduceAmount() + cap.getAllExpansions().stream().filter(holder -> holder.getExpansion() instanceof DamageReducingExpansion)
+                        .mapToInt(holder -> ((DamageReducingExpansion) holder.getExpansion()).getDamageReduction())
+                        .sum(), AttributeModifier.Operation.ADDITION));
+            }
+        });
+        return equipmentSlot == this.slot ? builder.build() : super.getAttributeModifiers(equipmentSlot);
+    }*/
 }

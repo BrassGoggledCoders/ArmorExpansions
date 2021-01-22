@@ -6,21 +6,22 @@ import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.common.util.NonNullSupplier;
 import net.minecraftforge.registries.ForgeRegistryEntry;
+import xyz.brassgoggledcoders.armorexpansions.ArmorExpansions;
 import xyz.brassgoggledcoders.armorexpansions.api.AREXAPI;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Supplier;
 
 public abstract class Expansion<MOD extends Expansion<MOD>> extends ForgeRegistryEntry<MOD> implements INBTSerializable<CompoundNBT> {
-    private final Supplier<ExpansionType> componentType;
+    private final NonNullSupplier<ExpansionType> componentType;
     private String translationKey;
     private ITextComponent name;
     private final List<EquipmentSlotType> validSlots;
 
-    public Expansion(Supplier<ExpansionType> componentType, EquipmentSlotType... type) {
+    public Expansion(NonNullSupplier<ExpansionType> componentType, EquipmentSlotType... type) {
         this.componentType = componentType;
         this.validSlots = Arrays.asList(type);
     }
@@ -49,20 +50,6 @@ public abstract class Expansion<MOD extends Expansion<MOD>> extends ForgeRegistr
         return true;
     }
 
-    public static Expansion<?> fromCompoundNBT(CompoundNBT compoundNBT) {
-        ExpansionType moduleType = AREXAPI.getExpansionType(compoundNBT.getString("type"));
-        if (moduleType != null) {
-            return moduleType.load(compoundNBT.getString("module"));
-        } else {
-            return null;
-        }
-    }
-
-    public static void toCompoundNBT(Expansion<?> module, CompoundNBT compoundNBT) {
-        compoundNBT.putString("type", String.valueOf(module.getType().getRegistryName()));
-        compoundNBT.putString("module", String.valueOf(module.getRegistryName()));
-    }
-
     public List<EquipmentSlotType> getValidSlots() {
         return validSlots;
     }
@@ -74,6 +61,24 @@ public abstract class Expansion<MOD extends Expansion<MOD>> extends ForgeRegistr
 
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
+    }
+
+    public static Expansion<?> fromCompoundNBT(CompoundNBT compoundNBT) {
+        ExpansionType moduleType = AREXAPI.getExpansionType(compoundNBT.getString("type"));
+        if (moduleType != null) {
+            Expansion<?> e = moduleType.load(compoundNBT.getString("module"));
+            e.deserializeNBT(compoundNBT.getCompound("data"));
+            return e;
+        } else {
+            return null;
+        }
+    }
+
+    public static CompoundNBT toCompoundNBT(Expansion<?> module, CompoundNBT compoundNBT) {
+        compoundNBT.putString("type", String.valueOf(module.getType().getRegistryName()));
+        compoundNBT.putString("module", String.valueOf(module.getRegistryName()));
+        compoundNBT.put("data", module.serializeNBT());
+        return compoundNBT;
     }
 
 }

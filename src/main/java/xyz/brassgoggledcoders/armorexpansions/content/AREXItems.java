@@ -8,8 +8,8 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.armorexpansions.ArmorExpansions;
+import xyz.brassgoggledcoders.armorexpansions.items.BaseExpansionItem;
 import xyz.brassgoggledcoders.armorexpansions.items.ExpandableArmorItem;
-import xyz.brassgoggledcoders.armorexpansions.items.TestModuleItem;
 
 public class AREXItems {
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ArmorExpansions.MOD_ID);
@@ -19,7 +19,8 @@ public class AREXItems {
     public static final RegistryObject<Item> EXPANDABLE_LEGGINGS = ITEMS.register("expandable_leggings", () -> new ExpandableArmorItem(ArmorMaterial.IRON, EquipmentSlotType.LEGS, defaultProperties()));
     public static final RegistryObject<Item> EXPANDABLE_BOOTS = ITEMS.register("expandable_boots", () -> new ExpandableArmorItem(ArmorMaterial.IRON, EquipmentSlotType.FEET, defaultProperties()));
 
-    public static final RegistryObject<Item> TEST_MODULE = ITEMS.register("test_module", () -> new TestModuleItem(defaultProperties()));
+    public static final RegistryObject<Item> TEST_MODULE = ITEMS.register("test_module", () -> new BaseExpansionItem(defaultProperties(), AREXExpansions.TEST::get));
+    public static final RegistryObject<Item> LEATHER_PLATING = ITEMS.register("leather_plating", () -> new BaseExpansionItem(defaultProperties(), AREXExpansions.LEATHER_PLATING::get));
 
     public static void register(IEventBus bus) {
         ITEMS.register(bus);

@@ -5,6 +5,7 @@ import xyz.brassgoggledcoders.armorexpansions.api.AREXAPI;
 
 import java.util.function.Function;
 
+//TODO Convert to more generic attribute modifying type
 public class DamageReducingExpansion extends Expansion<DamageReducingExpansion> {
 
     int damageReduction;
