@@ -15,6 +15,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import xyz.brassgoggledcoders.armorexpansions.api.AREXAPI;
+import xyz.brassgoggledcoders.armorexpansions.api.expansion.TickingExpansion;
 import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.ItemStackExpansionContainerProvider;
 
 import javax.annotation.Nullable;
@@ -29,8 +30,10 @@ public class ExpandableArmorItem extends ArmorItem {
     @Override
     @OnlyIn(Dist.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        stack.getCapability(AREXAPI.EXPANSION_CONTAINER_CAP).ifPresent(cap -> cap.getExpansions().forEach(expansion ->
-                tooltip.add(expansion.getExpansion().getDisplayName())));
+        stack.getCapability(AREXAPI.EXPANSION_CONTAINER_CAP).ifPresent(cap -> {
+            tooltip.add(new StringTextComponent("Maximum Number of Expansions: " + cap.getMaximumNumberOfExpansions()));
+            cap.getAllExpansions().forEach(expansion -> tooltip.add(expansion.getExpansion().getDisplayName()));
+        });
     }
 
     @Override
@@ -40,7 +43,15 @@ public class ExpandableArmorItem extends ArmorItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-        stack.getCapability(AREXAPI.EXPANSION_CONTAINER_CAP).ifPresent(cap -> cap.getExpansions().forEach(expansion ->
-                expansion.getExpansion().tick(stack, worldIn, entityIn)));
+        //TODO Cache these filtered lists
+        stack.getCapability(AREXAPI.EXPANSION_CONTAINER_CAP).ifPresent(cap -> {
+            if(cap.isActive()) {
+                cap.getAllExpansions()
+                        .stream()
+                        .filter(holder -> holder.getExpansion() instanceof TickingExpansion)
+                        .map(holder -> (TickingExpansion)holder.getExpansion())
+                        .forEach(expansion -> expansion.getTick().accept(stack, worldIn, entityIn));
+            }
+        });
     }
 }

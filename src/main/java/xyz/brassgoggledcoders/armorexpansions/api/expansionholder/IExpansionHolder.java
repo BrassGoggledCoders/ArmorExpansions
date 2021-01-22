@@ -1,7 +1,9 @@
 package xyz.brassgoggledcoders.armorexpansions.api.expansionholder;
 
 import xyz.brassgoggledcoders.armorexpansions.api.expansion.Expansion;
+import xyz.brassgoggledcoders.armorexpansions.api.expansion.ExpansionType;
 
 public interface IExpansionHolder {
-    Expansion getExpansion();
+    ExpansionType getExpansionType();
+    Expansion<?> getExpansion();
 }

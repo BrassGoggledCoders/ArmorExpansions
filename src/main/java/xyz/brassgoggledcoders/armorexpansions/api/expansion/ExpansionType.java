@@ -1,28 +1,63 @@
 package xyz.brassgoggledcoders.armorexpansions.api.expansion;
 
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Util;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.common.util.NonNullLazy;
+import net.minecraftforge.common.util.NonNullSupplier;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 
-public enum ExpansionType {
-    LEGGINGS,
-    CHESTPLATE,
-    HELMET,
-    BOOTS,
-    ALLARMOR,
-    WEAPON,
-    GLOVE;
+import javax.annotation.Nonnull;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.function.Function;
 
-    public static EquipmentSlotType getEquipmentSlotTypeFromExpansionType(ExpansionType type) {
-        switch(type) {
-            case HELMET:
-                return EquipmentSlotType.HEAD;
-            case CHESTPLATE:
-                return EquipmentSlotType.CHEST;
-            case LEGGINGS:
-                return EquipmentSlotType.LEGS;
-            case BOOTS:
-                return EquipmentSlotType.FEET;
-            default:
-                return null;
+public class ExpansionType extends ForgeRegistryEntry<ExpansionType> {
+    private final Function<ResourceLocation, Expansion<?>> loadValue;
+    private final NonNullLazy<Collection<? extends Expansion<?>>> getValues;
+
+    private String translationKey;
+    private ITextComponent name;
+
+    public ExpansionType(Function<ResourceLocation, Expansion<?>> loadValue, NonNullSupplier<Collection<? extends Expansion<?>>> getValues) {
+        this.loadValue = loadValue;
+        this.getValues = NonNullLazy.of(getValues);
+    }
+
+    @Nonnull
+    public String getTranslationKey() {
+        if (translationKey == null) {
+            translationKey = Util.makeTranslationKey("expansion-type", this.getRegistryName());
         }
+        return translationKey;
+    }
+
+    @Nonnull
+    public ITextComponent getDisplayName() {
+        if (name == null) {
+            name = new TranslationTextComponent(this.getTranslationKey());
+        }
+        return name;
+    }
+
+    public String getName() {
+        return Optional.ofNullable(this.getRegistryName())
+                .map(ResourceLocation::getPath)
+                .orElseThrow(() -> new IllegalStateException("No Registry Name Found"));
+    }
+
+    public Expansion<?> load(String registryName) {
+        return load(new ResourceLocation(registryName));
+    }
+
+    public Expansion<?> load(ResourceLocation registryName) {
+        return loadValue.apply(registryName);
+    }
+
+    public Collection<? extends Expansion<?>> getValues() {
+        return getValues.get();
     }
 }
+
+

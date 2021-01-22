@@ -1,45 +1,34 @@
 package xyz.brassgoggledcoders.armorexpansions.api.expansion;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.registries.ForgeRegistryEntry;
-import org.apache.logging.log4j.util.TriConsumer;
+import xyz.brassgoggledcoders.armorexpansions.api.AREXAPI;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Supplier;
 
-public class Expansion extends ForgeRegistryEntry<Expansion> {
-    ExpansionType type;
-    TriConsumer<ItemStack, World, Entity> tick;
+public abstract class Expansion<MOD extends Expansion<MOD>> extends ForgeRegistryEntry<MOD> implements INBTSerializable<CompoundNBT> {
+    private final Supplier<ExpansionType> componentType;
     private String translationKey;
     private ITextComponent name;
+    private final List<EquipmentSlotType> validSlots;
 
-    public Expansion(ExpansionType type) {
-        this.type = type;
-    }
-
-    public Expansion(ExpansionType type, TriConsumer<ItemStack, World, Entity> tick) {
-        this(type);
-        this.tick = tick;
-    }
-
-    public ExpansionType getType() {
-        return type;
-    }
-
-    public void tick(ItemStack stack, World world, Entity entity) {
-        if(tick != null) {
-            tick.accept(stack, world, entity);
-        }
+    public Expansion(Supplier<ExpansionType> componentType, EquipmentSlotType... type) {
+        this.componentType = componentType;
+        this.validSlots = Arrays.asList(type);
     }
 
     @Nonnull
     public String getTranslationKey() {
         if (translationKey == null) {
-            translationKey = Util.makeTranslationKey("expansion", this.getRegistryName());
+            translationKey = Util.makeTranslationKey(componentType.get().getName(), this.getRegistryName());
         }
         return translationKey;
     }
@@ -51,4 +40,40 @@ public class Expansion extends ForgeRegistryEntry<Expansion> {
         }
         return name;
     }
+
+    public ExpansionType getType() {
+        return componentType.get();
+    }
+
+    public boolean isActive() {
+        return true;
+    }
+
+    public static Expansion<?> fromCompoundNBT(CompoundNBT compoundNBT) {
+        ExpansionType moduleType = AREXAPI.getExpansionType(compoundNBT.getString("type"));
+        if (moduleType != null) {
+            return moduleType.load(compoundNBT.getString("module"));
+        } else {
+            return null;
+        }
+    }
+
+    public static void toCompoundNBT(Expansion<?> module, CompoundNBT compoundNBT) {
+        compoundNBT.putString("type", String.valueOf(module.getType().getRegistryName()));
+        compoundNBT.putString("module", String.valueOf(module.getRegistryName()));
+    }
+
+    public List<EquipmentSlotType> getValidSlots() {
+        return validSlots;
+    }
+
+    @Override
+    public CompoundNBT serializeNBT() {
+        return new CompoundNBT();
+    }
+
+    @Override
+    public void deserializeNBT(CompoundNBT nbt) {
+    }
+
 }

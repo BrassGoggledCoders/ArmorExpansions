@@ -17,8 +17,6 @@ public class ExpansionEditorTileEntity extends BasicInventoryTileEntity<Expansio
         this.getMachineComponent().addInventory(containerInventory = new InventoryComponent<>("container", 0, 0, 1));
         this.containerInventory.setInputFilter((stack, slot) -> stack.getCapability(AREXAPI.EXPANSION_CONTAINER_CAP).isPresent());
         this.getMachineComponent().addInventory(expansionsInventory = new InventoryComponent<>("expansions", 10, 20, 20));
-        //this.expansionsInventory.setInputFilter((stack, slot) -> !this.containerInventory.getStackInSlot(0).isEmpty()
-         //       && stack.getCapability(AREXAPI.EXTENSION_CAP).isPresent());
         this.expansionsInventory.setRange(4, 5);
     }
 
@@ -33,7 +31,7 @@ public class ExpansionEditorTileEntity extends BasicInventoryTileEntity<Expansio
         ItemStack stack = this.expansionsInventory.getStackInSlot(0);
         if(!stack.isEmpty()) {
             stack.getCapability(AREXAPI.EXPANSION_HOLDER_CAP).ifPresent(cap -> containerCapability.ifPresent(container -> {
-                if(container.canAcceptExpansion(cap)) {
+                if(container.getAllExpansions().size() < container.getMaximumNumberOfExpansions() && container.canAcceptExpansion(cap) && cap.getExpansion().getValidSlots().contains(this.containerInventory.getStackInSlot(0).getEquipmentSlot())) {
                     container.addExpansion(cap);
                     this.expansionsInventory.setStackInSlot(0, ItemStack.EMPTY);
                 }

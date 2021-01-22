@@ -10,7 +10,6 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import xyz.brassgoggledcoders.armorexpansions.ArmorExpansions;
 import xyz.brassgoggledcoders.armorexpansions.api.AREXAPI;
-import xyz.brassgoggledcoders.armorexpansions.api.AREXRegistries;
 import xyz.brassgoggledcoders.armorexpansions.api.expansionholder.IExpansionHolder;
 import xyz.brassgoggledcoders.armorexpansions.api.expansionholder.ItemStackExpansionProvider;
 
@@ -36,11 +35,6 @@ public class ItemStackExpansionContainerProvider implements ICapabilityProvider,
     }
 
     @Override
-    public ResourceLocation getIdentifier() {
-        return new ResourceLocation(ArmorExpansions.MOD_ID, "default");
-    }
-
-    @Override
     public boolean canAcceptExpansion(IExpansionHolder extension) {
         return true;
     }
@@ -52,7 +46,7 @@ public class ItemStackExpansionContainerProvider implements ICapabilityProvider,
 
     //TODO Can we cache this into a java object List<IExpansion> and simply compare the size most times?
     @Override
-    public ImmutableList<IExpansionHolder> getExpansions() {
+    public ImmutableList<IExpansionHolder> getAllExpansions() {
         CompoundNBT tagCompound = container.getTag();
         if (tagCompound == null || !tagCompound.contains(NBT_KEY)) {
             return ImmutableList.of();
@@ -60,7 +54,7 @@ public class ItemStackExpansionContainerProvider implements ICapabilityProvider,
             CompoundNBT actualTag = tagCompound.getCompound(NBT_KEY);
             List<IExpansionHolder> expansions = new ArrayList<>();
             for(int i = 1; i < actualTag.getInt("size"); i++) {
-                IExpansionHolder expansion = ItemStackExpansionProvider.getFromNBT(actualTag.getCompound("expansion_" + i));
+                IExpansionHolder expansion = getFromNBT(actualTag.getCompound("expansion_" + i));
                 expansions.add(expansion);
             }
             return ImmutableList.copyOf(expansions);
@@ -72,12 +66,29 @@ public class ItemStackExpansionContainerProvider implements ICapabilityProvider,
         if(expansion instanceof ItemStackExpansionProvider) {
             CompoundNBT tag = container.getOrCreateTag().getCompound(NBT_KEY);
             int index = tag.getInt("size") + 1;
-            tag.put("expansion_" + index, ItemStackExpansionProvider.writeToNBT((ItemStackExpansionProvider) expansion));
+            tag.put("expansion_" + index, writeToNBT((ItemStackExpansionProvider) expansion));
             tag.putInt("size", index);
             container.setTagInfo(NBT_KEY, tag);
         } else {
             //TODO
             ArmorExpansions.LOGGER.warn("Uh oh");
         }
+    }
+
+    @Override
+    public boolean isActive() {
+        return true;
+    }
+
+    public static ItemStackExpansionProvider getFromNBT(CompoundNBT tag) {
+        return new ItemStackExpansionProvider(ItemStack.read(tag.getCompound("stack")), AREXAPI.getExpansionType(new ResourceLocation(tag.getString("type"))).load(tag.getString("expansion")));
+    }
+
+    public static CompoundNBT writeToNBT(ItemStackExpansionProvider provider) {
+        CompoundNBT tag = new CompoundNBT();
+        tag.put("stack", provider.getContainer().write(new CompoundNBT()));
+        tag.putString("type", provider.getExpansion().getType().getRegistryName().toString());
+        tag.putString("expansion", provider.getExpansion().getRegistryName().toString());
+        return tag;
     }
 }
