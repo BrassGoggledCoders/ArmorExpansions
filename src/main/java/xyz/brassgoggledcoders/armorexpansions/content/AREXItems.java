@@ -9,6 +9,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import xyz.brassgoggledcoders.armorexpansions.ArmorExpansions;
 import xyz.brassgoggledcoders.armorexpansions.items.ItemExpandableArmor;
+import xyz.brassgoggledcoders.armorexpansions.items.ItemTestModule;
 
 public class AREXItems {
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ArmorExpansions.MOD_ID);
@@ -17,6 +18,8 @@ public class AREXItems {
     public static final RegistryObject<Item> EXPANDABLE_CHESTPLATE = ITEMS.register("expandable_chestplate", () -> new ItemExpandableArmor(ArmorMaterial.IRON, EquipmentSlotType.CHEST, defaultProperties()));
     public static final RegistryObject<Item> EXPANDABLE_LEGGINGS = ITEMS.register("expandable_leggings", () -> new ItemExpandableArmor(ArmorMaterial.IRON, EquipmentSlotType.LEGS, defaultProperties()));
     public static final RegistryObject<Item> EXPANDABLE_BOOTS = ITEMS.register("expandable_boots", () -> new ItemExpandableArmor(ArmorMaterial.IRON, EquipmentSlotType.FEET, defaultProperties()));
+
+    public static final RegistryObject<Item> TEST_MODULE = ITEMS.register("test_module", () -> new ItemTestModule(defaultProperties()));
 
     public static void register(IEventBus bus) {
         ITEMS.register(bus);
