@@ -5,16 +5,14 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.util.TriConsumer;
-import xyz.brassgoggledcoders.armorexpansions.api.AREXAPI;
-
-import java.util.function.Function;
+import xyz.brassgoggledcoders.armorexpansions.content.AREXExpansionTypes;
 
 public class TickingExpansion extends Expansion<TickingExpansion> {
 
     private final TriConsumer<ItemStack, World, Entity> tick;
 
     public TickingExpansion(TriConsumer<ItemStack, World, Entity> tick, EquipmentSlotType... type) {
-        super(() -> AREXAPI.getExpansionType("ticking"), type);
+        super(AREXExpansionTypes.TICKING::get, type);
         this.tick = tick;
     }
 

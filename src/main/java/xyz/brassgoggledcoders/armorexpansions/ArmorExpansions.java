@@ -17,6 +17,7 @@ import xyz.brassgoggledcoders.armorexpansions.api.expansion.Expansion;
 import xyz.brassgoggledcoders.armorexpansions.api.expansion.ExpansionType;
 import xyz.brassgoggledcoders.armorexpansions.api.expansion.TickingExpansion;
 import xyz.brassgoggledcoders.armorexpansions.content.AREXBlocks;
+import xyz.brassgoggledcoders.armorexpansions.content.AREXExpansionTypes;
 import xyz.brassgoggledcoders.armorexpansions.content.AREXExpansions;
 import xyz.brassgoggledcoders.armorexpansions.content.AREXItems;
 
@@ -38,6 +39,7 @@ public class ArmorExpansions {
 
         setupRegistries();
 
+        AREXExpansionTypes.register(modBus);
         AREXExpansions.register(modBus);
         AREXBlocks.register(modBus);
         AREXItems.register(modBus);

@@ -17,7 +17,7 @@ public class ExpansionEditorTileEntity extends BasicInventoryTileEntity<Expansio
         this.getMachineComponent().addInventory(containerInventory = new InventoryComponent<>("container", 0, 0, 1));
         this.containerInventory.setInputFilter((stack, slot) -> stack.getCapability(AREXAPI.EXPANSION_CONTAINER_CAP).isPresent());
         this.getMachineComponent().addInventory(expansionsInventory = new InventoryComponent<>("expansions", 10, 20, 20));
-        this.expansionsInventory.setRange(4, 5);
+        this.expansionsInventory.setRange(5, 4);
     }
 
     @Override

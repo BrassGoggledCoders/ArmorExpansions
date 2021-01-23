@@ -1,12 +1,6 @@
 package xyz.brassgoggledcoders.armorexpansions.items;
 
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
@@ -21,12 +15,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import xyz.brassgoggledcoders.armorexpansions.api.AREXAPI;
-import xyz.brassgoggledcoders.armorexpansions.api.expansion.DamageReducingExpansion;
-import xyz.brassgoggledcoders.armorexpansions.api.expansion.ExpansionType;
 import xyz.brassgoggledcoders.armorexpansions.api.expansion.TickingExpansion;
 import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.ExpansionContainer;
 import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.ItemStackExpansionContainerProvider;
-import xyz.brassgoggledcoders.armorexpansions.content.AREXExpansions;
+import xyz.brassgoggledcoders.armorexpansions.content.AREXExpansionTypes;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -62,7 +54,7 @@ public class ExpandableArmorItem extends ArmorItem {
         stack.getCapability(AREXAPI.EXPANSION_CONTAINER_CAP).ifPresent(cap -> {
             if (cap instanceof ExpansionContainer && cap.isActive()) {
                 ((ExpansionContainer) cap).load();
-                cap.getExpansionsOfType(AREXExpansions.TICKING.get(), TickingExpansion.class).forEach(expansion -> expansion.getTick().accept(stack, world, player));
+                cap.getExpansionsOfType(AREXExpansionTypes.TICKING.get(), TickingExpansion.class).forEach(expansion -> expansion.getTick().accept(stack, world, player));
             }
         });
     }

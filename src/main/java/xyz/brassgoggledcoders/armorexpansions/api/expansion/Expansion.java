@@ -8,7 +8,6 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.NonNullSupplier;
 import net.minecraftforge.registries.ForgeRegistryEntry;
-import xyz.brassgoggledcoders.armorexpansions.ArmorExpansions;
 import xyz.brassgoggledcoders.armorexpansions.api.AREXAPI;
 
 import javax.annotation.Nonnull;
@@ -29,7 +28,7 @@ public abstract class Expansion<MOD extends Expansion<MOD>> extends ForgeRegistr
     @Nonnull
     public String getTranslationKey() {
         if (translationKey == null) {
-            translationKey = Util.makeTranslationKey(componentType.get().getName(), this.getRegistryName());
+            translationKey = Util.makeTranslationKey("expansion", this.getRegistryName());
         }
         return translationKey;
     }
@@ -42,6 +41,7 @@ public abstract class Expansion<MOD extends Expansion<MOD>> extends ForgeRegistr
         return name;
     }
 
+    @Nonnull
     public ExpansionType getType() {
         return componentType.get();
     }
