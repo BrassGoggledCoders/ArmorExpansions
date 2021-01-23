@@ -21,6 +21,7 @@ public class AREXItems {
 
     public static final RegistryObject<Item> TEST_MODULE = ITEMS.register("test_module", () -> new BaseExpansionItem(defaultProperties(), AREXExpansions.TEST::get));
     public static final RegistryObject<Item> LEATHER_PLATING = ITEMS.register("leather_plating", () -> new BaseExpansionItem(defaultProperties(), AREXExpansions.LEATHER_PLATING::get));
+    public static final RegistryObject<Item> OBSIDIAN_PLATING = ITEMS.register("obsidian_plating", () -> new BaseExpansionItem(defaultProperties(), AREXExpansions.OBSIDIAN_PLATING::get));
 
     public static void register(IEventBus bus) {
         ITEMS.register(bus);

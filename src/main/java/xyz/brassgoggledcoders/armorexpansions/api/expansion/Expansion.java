@@ -16,13 +16,21 @@ import java.util.List;
 
 public abstract class Expansion<MOD extends Expansion<MOD>> extends ForgeRegistryEntry<MOD> implements INBTSerializable<CompoundNBT> {
     private final NonNullSupplier<ExpansionType> componentType;
+    private final List<EquipmentSlotType> validSlots;
+    private final int maxDamage;
+
     private String translationKey;
     private ITextComponent name;
-    private final List<EquipmentSlotType> validSlots;
+    private int damage;
 
-    public Expansion(NonNullSupplier<ExpansionType> componentType, EquipmentSlotType... type) {
+    public Expansion(NonNullSupplier<ExpansionType> componentType, int maxDamage, EquipmentSlotType... type) {
         this.componentType = componentType;
         this.validSlots = Arrays.asList(type);
+        this.maxDamage = maxDamage;
+    }
+
+    public Expansion(NonNullSupplier<ExpansionType> componentType, EquipmentSlotType... type) {
+        this(componentType, 0, type);
     }
 
     @Nonnull
@@ -56,11 +64,14 @@ public abstract class Expansion<MOD extends Expansion<MOD>> extends ForgeRegistr
 
     @Override
     public CompoundNBT serializeNBT() {
-        return new CompoundNBT();
+        CompoundNBT tag = new CompoundNBT();
+        tag.putInt("damage", damage);
+        return tag;
     }
 
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
+        this.damage = nbt.getInt("damage");
     }
 
     public static Expansion<?> fromCompoundNBT(CompoundNBT compoundNBT) {

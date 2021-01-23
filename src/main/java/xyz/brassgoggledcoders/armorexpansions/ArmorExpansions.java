@@ -12,8 +12,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 import net.minecraftforge.registries.RegistryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import xyz.brassgoggledcoders.armorexpansions.api.expansion.DamageReducingExpansion;
-import xyz.brassgoggledcoders.armorexpansions.api.expansion.Expansion;
+import xyz.brassgoggledcoders.armorexpansions.api.expansion.AttributeExpansion;
 import xyz.brassgoggledcoders.armorexpansions.api.expansion.ExpansionType;
 import xyz.brassgoggledcoders.armorexpansions.api.expansion.TickingExpansion;
 import xyz.brassgoggledcoders.armorexpansions.content.AREXBlocks;
@@ -49,7 +48,7 @@ public class ArmorExpansions {
         if (!registriesSetup) {
             makeRegistry("expansion_type", ExpansionType.class);
             makeRegistry("ticking", TickingExpansion.class);
-            makeRegistry("damage_reducing", DamageReducingExpansion.class);
+            makeRegistry("attribute", AttributeExpansion.class);
             registriesSetup = true;
         }
     }

@@ -9,7 +9,7 @@ import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryManager;
-import xyz.brassgoggledcoders.armorexpansions.api.expansion.DamageReducingExpansion;
+import xyz.brassgoggledcoders.armorexpansions.api.expansion.AttributeExpansion;
 import xyz.brassgoggledcoders.armorexpansions.api.expansion.ExpansionType;
 import xyz.brassgoggledcoders.armorexpansions.api.expansion.TickingExpansion;
 import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.ExpansionContainer;
@@ -34,7 +34,7 @@ public class AREXAPI {
 
     public static Lazy<IForgeRegistry<ExpansionType>> EXPANSION_TYPE = Lazy.of(() -> RegistryManager.ACTIVE.getRegistry(ExpansionType.class));
     public static Lazy<IForgeRegistry<TickingExpansion>> TICKING_EXPANSION = Lazy.of(() -> RegistryManager.ACTIVE.getRegistry(TickingExpansion.class));
-    public static Lazy<IForgeRegistry<DamageReducingExpansion>> DAMAGE_REDUCING_EXPANSION = Lazy.of(() -> RegistryManager.ACTIVE.getRegistry(DamageReducingExpansion.class));
+    public static Lazy<IForgeRegistry<AttributeExpansion>> ATTRIBUTE_EXPANSION = Lazy.of(() -> RegistryManager.ACTIVE.getRegistry(AttributeExpansion.class));
 
     static {
         CapabilityManager.INSTANCE.register(IExpansionContainer.class, new NOPStorage<>(), () -> new ExpansionContainer(ItemStack.EMPTY, 0));
@@ -57,11 +57,11 @@ public class AREXAPI {
         return TICKING_EXPANSION.get().getValues();
     }
 
-    public static DamageReducingExpansion getDamageReducing(ResourceLocation name) {
-        return DAMAGE_REDUCING_EXPANSION.get().getValue(name);
+    public static AttributeExpansion getAttribute(ResourceLocation name) {
+        return ATTRIBUTE_EXPANSION.get().getValue(name);
     }
 
-    public static Collection<DamageReducingExpansion> getDamageReducingExpansions() {
-        return DAMAGE_REDUCING_EXPANSION.get().getValues();
+    public static Collection<AttributeExpansion> getAttributeExpansions() {
+        return ATTRIBUTE_EXPANSION.get().getValues();
     }
 }
