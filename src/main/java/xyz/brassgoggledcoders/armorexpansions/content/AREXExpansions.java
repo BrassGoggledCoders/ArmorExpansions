@@ -19,10 +19,10 @@ public class AREXExpansions {
 
     private static final DeferredRegister<AttributeExpansion> ATTRIBUTE_EXPANSIONS = DeferredRegister.create(AREXRegistries.ATTRIBUTE_EXPANSIONS, ArmorExpansions.MOD_ID);
     public static final RegistryObject<AttributeExpansion> LEATHER_PLATING = ATTRIBUTE_EXPANSIONS.register("leather_plating", () -> new AttributeExpansion.Builder()
-            .addAttributeModifier(Attributes.ARMOR, new AttributeModifier("Armor modifier", 3, AttributeModifier.Operation.ADDITION))
+            .addAttributeModifier(Attributes.ARMOR, "Armor modifier", 3, AttributeModifier.Operation.ADDITION)
             .build(ALLARMOR));
     public static final RegistryObject<AttributeExpansion> OBSIDIAN_PLATING = ATTRIBUTE_EXPANSIONS.register("obsidian_plating", () -> new AttributeExpansion.Builder()
-            .addAttributeModifier(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier("Armor knockback resistance", 2, AttributeModifier.Operation.ADDITION))
+            .addAttributeModifier(Attributes.KNOCKBACK_RESISTANCE, "Armor knockback resistance", 0.2D, AttributeModifier.Operation.ADDITION)
             .build(ALLARMOR));
 
     public static void register(IEventBus bus) {
