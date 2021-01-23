@@ -14,7 +14,6 @@ import xyz.brassgoggledcoders.armorexpansions.api.expansion.ExpansionType;
 import xyz.brassgoggledcoders.armorexpansions.api.expansion.TickingExpansion;
 import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.ExpansionContainer;
 import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.IExpansionContainer;
-import xyz.brassgoggledcoders.armorexpansions.api.expansioncontainer.ItemStackExpansionContainerProvider;
 import xyz.brassgoggledcoders.armorexpansions.api.expansionholder.IExpansionHolder;
 import xyz.brassgoggledcoders.armorexpansions.api.expansionholder.ItemStackExpansionProvider;
 import xyz.brassgoggledcoders.armorexpansions.content.AREXExpansions;

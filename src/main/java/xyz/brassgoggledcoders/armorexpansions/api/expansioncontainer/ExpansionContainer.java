@@ -58,7 +58,7 @@ public class ExpansionContainer implements IExpansionContainer, INBTSerializable
 
     @Override
     public void addExpansion(IExpansionHolder expansion) {
-        if(expansion != null && expansion.getExpansion() != null) {
+        if (expansion != null && expansion.getExpansion() != null) {
             Expansion<?> ex = expansion.getExpansion();
             this.expansionsByType.put(ex.getType(), ex);
             //this.expansionsByType.get(ex.getType()).add(ex);
@@ -113,7 +113,7 @@ public class ExpansionContainer implements IExpansionContainer, INBTSerializable
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
         ListNBT listNBT = nbt.getList("expansions", Constants.NBT.TAG_COMPOUND);
-        for(INBT tag : listNBT) {
+        for (INBT tag : listNBT) {
             CompoundNBT ctag = (CompoundNBT) tag;
             Expansion<?> ex = Expansion.fromCompoundNBT(ctag);
             this.expansionsByType.put(ex.getType(), ex);
